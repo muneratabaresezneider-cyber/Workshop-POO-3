@@ -23,32 +23,37 @@
             if (rest.Length == 0)
                 return "La viga soporta el peso!";
 
-            var parts = rest.Split('*');
-            if (parts.Any(p => p.Length == 0))
+            long total = 0;
+            int currSeq = 0;
+
+            if (rest[0] != '=')
                 return "La viga está mal construida!";
 
-            var seqWeights = new List<long>();
-
-            foreach (var p in parts)
+            for (int i = 0; i < rest.Length; i++)
             {
-                if (!p.All(c => c == '='))
-                    return "La viga está mal construida!";
-
-                long k = p.Length;
-                long w = k * (k + 1) / 2; 
-                seqWeights.Add(w);
-            }
-
-            long total = 0;
-            for (int i = 0; i < seqWeights.Count; i++)
-            {
-                total += seqWeights[i];
-                if (i > 0)
+                char c = rest[i];
+                if (c == '=')
                 {
-                    long connWeight = 2 * seqWeights[i - 1];
-                    total += connWeight;
+                    currSeq++;
+                }
+                else if (c == '*')
+                {
+                    if (currSeq == 0)
+                        return "La viga está mal construida!";
+
+                    total += currSeq; 
+                    total += 2 * currSeq; 
+
+                    currSeq = 0;
+                }
+                else
+                {
+                    return "La viga está mal construida!";
                 }
             }
+
+            if (currSeq > 0)
+                total += currSeq;
 
             return baseStrength >= total
                 ? "La viga soporta el peso!"

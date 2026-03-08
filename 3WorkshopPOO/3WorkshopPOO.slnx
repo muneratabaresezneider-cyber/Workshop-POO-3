@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/Shared/">
+    <Project Path="../Shared/Shared.csproj" Id="b4f5ba91-3592-4511-bf46-d1f834b8abca" />
+  </Folder>
+  <Folder Name="/THE STRONGEST BEAM/">
+    <Project Path="../THE STRONGEST BEAM/THE STRONGEST BEAM.csproj" Id="c7314921-4244-42af-92d8-b682679b2d2b" />
+  </Folder>
+</Solution>
