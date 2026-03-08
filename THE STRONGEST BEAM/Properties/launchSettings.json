@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "THE STRONGEST BEAM": {
+      "commandName": "Project"
+    },
+    "WSL": {
+      "commandName": "WSL2",
+      "distributionName": ""
+    }
+  }
+}

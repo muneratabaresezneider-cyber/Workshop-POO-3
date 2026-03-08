@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/HORSES IN CONFLICT/">
+    <Project Path="../HORSES IN CONFLICT/HORSES IN CONFLICT.csproj" Id="eb624ccb-4b94-4943-b1f8-763e1d1d54d8" />
+  </Folder>
   <Folder Name="/Shared/">
     <Project Path="../Shared/Shared.csproj" Id="b4f5ba91-3592-4511-bf46-d1f834b8abca" />
   </Folder>
