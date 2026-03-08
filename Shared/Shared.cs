@@ -11,7 +11,7 @@ public static class ConsoleExtension
             Console.Write(message);
             var answer = Console.ReadLine();
             if (string.IsNullOrWhiteSpace(answer))
-                continue;
+                continue; 
             var a = answer.Trim().ToLowerInvariant();
             if (a == "sí" || a == "si") a = "s";
             if (a == "no") a = "n";
@@ -19,15 +19,15 @@ public static class ConsoleExtension
             {
                 var first = a[0].ToString();
                 if (opts.Contains(first) || opts.Contains(a))
-                    return first;
+                    return first; 
             }
         }
     }
+    /// Evalúa la representación textual de una viga y determina si la base soporta el peso.    
     public static string EvaluateBeam(string beam)
     {
         if (string.IsNullOrEmpty(beam))
             return "La viga está mal construida!";
-
         char baseChar = beam[0];
         int baseStrength = baseChar switch
         {
@@ -36,20 +36,16 @@ public static class ConsoleExtension
             '#' => 90,
             _ => -1
         };
-
         if (baseStrength < 0)
             return "La viga está mal construida!";
-
         string rest = beam.Substring(1);
         if (rest.Length == 0)
-            return "La viga soporta el peso!";
+            return "La viga soporta el peso!"; 
 
-        long total = 0;
+        long total = 0; 
         int currSeq = 0;
-
         if (rest[0] != '=')
             return "La viga está mal construida!";
-
         for (int i = 0; i < rest.Length; i++)
         {
             char c = rest[i];
@@ -61,35 +57,39 @@ public static class ConsoleExtension
             {
                 if (currSeq == 0)
                     return "La viga está mal construida!";
+                total += currSeq;
+                // Cada conexión pesa el doble que la secuencia anterior.
+                total += 2 * currSeq;
 
-                total += currSeq; 
-                total += 2 * currSeq; 
-
+                // Reiniciar contador de la secuencia tras procesar la conexión.
                 currSeq = 0;
             }
             else
             {
+                // Cualquier otro carácter invalida la construcción.
                 return "La viga está mal construida!";
             }
         }
-
         if (currSeq > 0)
             total += currSeq;
-         
+
+        // Comparar la resistencia de la base con el peso total calculado.
         return baseStrength >= total
             ? "La viga soporta el peso!"
             : "La viga NO soporta el peso!";
     }
+
+    /// Analiza una lista de posiciones de caballos
+    /// y genera líneas describiendo con qué otros caballos entra en conflicto cada uno.
+
     public static IEnumerable<string> AnalyzeHorseConflicts(string input)
     {
         if (string.IsNullOrWhiteSpace(input))
             yield break;
-
         var tokens = input.Split(',')
             .Select(t => t.Trim().ToUpper())
             .Where(t => t.Length > 0)
             .ToList();
-
         var positions = new List<(int col, int row, string token)>();
         foreach (var tok in tokens)
         {
@@ -109,9 +109,10 @@ public static class ConsoleExtension
             int row = (r - '1');
             positions.Add((col, row, tok));
         }
-
+        // Desplazamientos válidos del caballo (dc, dr).
         var moves = new (int dc, int dr)[] { (1,2),(2,1),(-1,2),(-2,1),(1,-2),(2,-1),(-1,-2),(-2,-1) };
 
+        // Para cada caballo, buscar si alguno de los demás está en una de las casillas atacadas.
         for (int i = 0; i < positions.Count; i++)
         {
             var p = positions[i];
@@ -122,9 +123,9 @@ public static class ConsoleExtension
             {
                 for (int j = 0; j < positions.Count; j++)
                 {
-                    if (i == j) continue;
+                    if (i == j) continue; 
                     var q = positions[j];
-                    if (q.col < 0 || q.row < 0) continue;
+                    if (q.col < 0 || q.row < 0) continue; 
                     int dc = q.col - p.col;
                     int dr = q.row - p.row;
                     if (moves.Any(m => m.dc == dc && m.dr == dr))
@@ -133,7 +134,6 @@ public static class ConsoleExtension
                     }
                 }
             }
-
             if (conflicts.Count == 0)
             {
                 yield return $"Analizando Caballo en {label} =>";
