@@ -54,7 +54,7 @@
 
             if (currSeq > 0)
                 total += currSeq;
-
+         
             return baseStrength >= total
                 ? "La viga soporta el peso!"
                 : "La viga NO soporta el peso!";
